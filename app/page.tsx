@@ -1,10 +1,10 @@
-'use client'; // 👈 必须加上这一行，因为我们要用点击事件
+'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard, ChevronDown, Check } from 'lucide-react';
+import { useSearchParams } from 'next/navigation'; // 👈 引入读取参数的钩子
+import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard, Check } from 'lucide-react';
 
-// 1. 定义翻译字典 (Dictionary)
 const translations = {
   en: {
     badge: "China's Best, Delivered to Canada.",
@@ -84,29 +84,24 @@ const translations = {
 };
 
 const BuyFromChinaClone = () => {
-  // 2. 状态管理
   const [currentLang, setCurrentLang] = useState<'en' | 'fr' | 'zh'>('en');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const searchParams = useSearchParams(); // 读取 URL 参数
 
-  // 获取当前语言的文本
+  // 监听 URL 变化，自动切换语言
+  useEffect(() => {
+    const lang = searchParams.get('lang');
+    if (lang === 'zh' || lang === 'fr') {
+      setCurrentLang(lang);
+    } else {
+      setCurrentLang('en');
+    }
+  }, [searchParams]);
+
   const t = translations[currentLang];
-
-  // 切换语言函数
-  const switchLang = (lang: 'en' | 'fr' | 'zh') => {
-    setCurrentLang(lang);
-    setIsMenuOpen(false);
-  };
-
-  // 语言显示名称
-  const langNames = {
-    en: "English",
-    fr: "Français",
-    zh: "中文"
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans selection:bg-red-100">
-
+      
       {/* Hero Section */}
       <header className="bg-white pb-16 pt-12 lg:pt-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -208,9 +203,7 @@ const BuyFromChinaClone = () => {
               {t.footer_btn}
             </button>
           </Link>
-          <div className="mt-16 pt-8 border-t border-gray-800 text-sm text-gray-500">
-            © 2025 BuyFromChina.ca. All rights reserved.
-          </div>
+          {/* 移除了之前的底部文字，因为现在有全局Footer了 */}
         </div>
       </section>
     </div>
