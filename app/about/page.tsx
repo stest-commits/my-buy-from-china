@@ -16,7 +16,7 @@ const AboutPage = () => {
             {/* 这里可以放你的照片 */}
             <img src="/placeholder-avatar.png" alt="Founder" className="w-full h-full object-cover opacity-50" /> 
          </div>
-         <p className="text-gray-500">Stella Hao</p>
+         <p className="text-gray-500">Yolanda Zhang</p>
       </div>
     </div>
   );
