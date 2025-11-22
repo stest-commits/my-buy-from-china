@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link'; // 👈 新增：引入 Link 组件
 import { Plus, Loader2, CheckCircle } from 'lucide-react';
 
 const QuoteForm = () => {
   // --- 🔴 记得把这里换回你自己的 Key ---
-  const ACCESS_KEY = "8db64b5c-5970-44bc-abae-49c044171224"; 
+  const ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; 
 
   // 状态管理
   const [urls, setUrls] = useState(['']); 
@@ -101,7 +102,6 @@ const QuoteForm = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 font-sans">
-      {/* 🔧 宽度调整: max-w-3xl (原来是 max-w-xl)，让表单更宽敞 */}
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden">
         
         <div className="p-8 pb-4 bg-white">
@@ -111,7 +111,6 @@ const QuoteForm = () => {
             <div className="inline-block bg-red-100 text-red-700 text-sm font-bold px-4 py-1.5 rounded-full mb-4">
               China's Best, Delivered to Canada.
             </div>
-            {/* 🔧 字体加深: text-gray-900 (纯黑) */}
             <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Request a quote</h1>
         </div>
 
@@ -121,7 +120,6 @@ const QuoteForm = () => {
           
           {/* Product URLs */}
           <div>
-            {/* 🔧 Label 颜色加深: text-gray-900 */}
             <label className="block text-base font-bold text-gray-900 mb-3">Product URLs</label>
             <div className="space-y-4 mb-4">
               {urls.map((url, index) => (
@@ -132,10 +130,6 @@ const QuoteForm = () => {
                   placeholder="https://item.taobao.com/item.htm?id=..."
                   value={url}
                   onChange={(e) => handleUrlChange(index, e.target.value)}
-                  // 🔧 输入框优化: 
-                  // text-gray-900 (输入文字纯黑)
-                  // border-gray-400 (边框更深)
-                  // placeholder:text-gray-500 (提示文字更深，不再看不见)
                   className="w-full border-2 border-gray-300 focus:border-red-500 rounded-xl px-5 py-4 focus:outline-none text-gray-900 placeholder:text-gray-500 text-base transition-colors"
                 />
               ))}
@@ -227,11 +221,17 @@ const QuoteForm = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button & Legal Link */}
           <div className="pt-6">
+             {/* 👇 新增：带有条款链接的免责声明 */}
              <p className="text-sm text-gray-500 mb-4 text-center">
-               We typically respond within 12 hours.
+               By submitting this request, you agree to our{' '}
+               <Link href="/legal/terms" className="text-red-600 underline hover:text-red-800 font-medium">
+                 Terms and Conditions
+               </Link>
+               . We typically respond within 12 hours.
              </p>
+             
              <button 
                type="submit" 
                disabled={isSubmitting}
