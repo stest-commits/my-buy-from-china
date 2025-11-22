@@ -1,6 +1,7 @@
 'use client';
+
 import React, { useState } from 'react';
-import { Plus, Upload, Info, CheckCircle, Loader2 } from 'lucide-react';
+import { Plus, Loader2, CheckCircle } from 'lucide-react';
 
 const QuoteForm = () => {
   // --- 🔴 在这里填入你的 Web3Forms Access Key ---
@@ -21,8 +22,8 @@ const QuoteForm = () => {
     priceRange: 'Select a price range'
   });
 
-  // 处理普通输入框变化
-  const handleInputChange = (e) => {
+  // --- 🔧 修复点 1: 加上 : any ---
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -32,25 +33,23 @@ const QuoteForm = () => {
     setUrls([...urls, '']);
   };
 
-  // 处理链接输入变化
-  const handleUrlChange = (index, value) => {
+  // --- 🔧 修复点 2: 加上 : any ---
+  const handleUrlChange = (index: any, value: any) => {
     const newUrls = [...urls];
     newUrls[index] = value;
     setUrls(newUrls);
   };
 
   // --- 核心逻辑：提交表单 ---
-  const handleSubmit = async (e) => {
+  // --- 🔧 修复点 3: 加上 : any ---
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // 1. 准备发送的数据
-    // Web3Forms 接受 JSON 格式
     const dataToSend = {
       access_key: ACCESS_KEY,
-      subject: `新询价来自: ${formData.name}`, // 邮件标题
+      subject: `新询价来自: ${formData.name}`,
       from_name: "BuyFromChina Bot",
-      // 把所有数据整理成易读的格式
       message: `
         姓名: ${formData.name}
         邮箱: ${formData.email}
@@ -63,14 +62,12 @@ const QuoteForm = () => {
         --- 商品链接 ---
         ${urls.filter(u => u.trim() !== '').join('\n')}
       `,
-      // 也可以单独发字段，方便后台处理
       ...formData,
       product_urls: urls.join(', '), 
       parcel_size: parcelSize
     };
 
     try {
-      // 2. 发送请求
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
@@ -95,7 +92,6 @@ const QuoteForm = () => {
     }
   };
 
-  // 提交成功后的显示界面
   if (isSuccess) {
     return (
       <div className="min-h-screen bg-gray-50 py-8 px-4 flex items-center justify-center">
@@ -121,8 +117,6 @@ const QuoteForm = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 font-sans">
       <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        
-        {/* Header Area */}
         <div className="p-6 pb-2">
             <div className="bg-red-50 border border-red-100 rounded-lg p-4 mb-6 text-sm text-red-800 leading-relaxed">
               <strong>Note:</strong> BuyFromChina.ca is a purchasing agent. We do not manufacture or sell products.
@@ -135,20 +129,18 @@ const QuoteForm = () => {
 
         <hr className="border-gray-100" />
 
-        {/* Form Area */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          
-          {/* Product URLs */}
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-2">Product URLs</label>
             <div className="space-y-3 mb-3">
               {urls.map((url, index) => (
                 <input
                   key={index}
-                  required={index === 0} // 只有第一个必须填
+                  required={index === 0}
                   type="url"
                   placeholder="https://item.taobao.com/..."
                   value={url}
+                  // --- 🔧 修复点 4: 这里也加上 : any (在参数里不方便加，直接在函数定义处改就好，这里保持原样即可) ---
                   onChange={(e) => handleUrlChange(index, e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                 />
@@ -163,7 +155,6 @@ const QuoteForm = () => {
             </button>
           </div>
 
-          {/* User Details */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">Recipient name</label>
@@ -203,7 +194,6 @@ const QuoteForm = () => {
             </div>
           </div>
 
-          {/* Notes */}
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-2">Notes</label>
             <textarea 
@@ -216,7 +206,6 @@ const QuoteForm = () => {
             ></textarea>
           </div>
           
-          {/* Price Range */}
            <div>
              <label className="block text-sm font-bold text-gray-700 mb-2">Reference price in CAD</label>
              <select 
@@ -233,7 +222,6 @@ const QuoteForm = () => {
              </select>
           </div>
 
-          {/* Parcel Size */}
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-3">Estimated parcel size</label>
             <div className="space-y-3">
@@ -258,7 +246,6 @@ const QuoteForm = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="pt-4">
              <p className="text-xs text-gray-500 mb-4 text-center">
                We respond within 12 hours.
