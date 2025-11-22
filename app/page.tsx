@@ -1,9 +1,10 @@
 import React from 'react';
-import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard, Package } from 'lucide-react';
+import Link from 'next/link'; // 👈 引入导航组件
+import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard } from 'lucide-react';
 
 const BuyFromChinaClone = () => {
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-gray-50 font-sans selection:bg-red-100">
       {/* Navbar */}
       <nav className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
@@ -11,34 +12,38 @@ const BuyFromChinaClone = () => {
             <span className="text-red-600"><ShoppingCart /></span>
             BuyFromChina<span className="text-red-600">.ca</span>
           </div>
-          <button className="text-sm font-medium text-gray-600 border px-3 py-1 rounded-full">
+          <button className="text-sm font-medium text-gray-600 border px-3 py-1 rounded-full hover:bg-gray-50 transition">
             English ▾
           </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="bg-white pb-8 pt-4 px-4">
+      <header className="bg-white pb-12 pt-8 px-4">
         <div className="max-w-md mx-auto">
-          <div className="inline-block bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+          <div className="inline-block bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-6">
             China's Best, Delivered to Canada.
           </div>
-          <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">
+          <h1 className="text-5xl font-extrabold text-gray-900 leading-tight mb-6 tracking-tight">
             From Taobao to your doorstep.
           </h1>
-          <p className="text-gray-600 mb-6 text-lg">
+          <p className="text-gray-600 mb-8 text-lg leading-relaxed">
             The simplest way for Canadians to shop Taobao and Tmall. We verify listings, convert pricing to CAD, and handle shipping.
           </p>
-          <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl text-lg shadow-lg transition-all flex justify-center items-center gap-2">
-            Start your quote <ArrowRight size={20}/>
-          </button>
+          
+          {/* 👇 修复点：添加了 Link 跳转功能 */}
+          <Link href="/quote" className="block w-full">
+            <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl text-lg shadow-lg transition-all flex justify-center items-center gap-2 cursor-pointer active:scale-95">
+              Start your quote <ArrowRight size={20}/>
+            </button>
+          </Link>
         </div>
       </header>
 
-      {/* How it works Section (Steps) */}
-      <section className="py-10 px-4 max-w-md mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">How it works</h2>
-        <p className="text-gray-500 mb-8">Four clear steps from inspiration to delivery.</p>
+      {/* How it works Section */}
+      <section className="py-12 px-4 max-w-md mx-auto">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">How it works</h2>
+        <p className="text-gray-500 mb-8 text-lg">Four clear steps from inspiration to delivery.</p>
 
         <div className="space-y-6">
           {/* Step 1 */}
@@ -52,10 +57,7 @@ const BuyFromChinaClone = () => {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <div className="w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold mb-4">2</div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Confirm your quote</h3>
-            <div className="aspect-video bg-gray-100 rounded-lg mb-3 flex items-center justify-center text-gray-400">
-              [Quote Interface Image]
-            </div>
-            <p className="text-gray-600">Review the full breakdown including shipping, tax, and service fee.</p>
+            <p className="text-gray-600">Review the full breakdown including shipping, tax, and service fee. Approve it or ask for tweaks.</p>
           </div>
 
           {/* Step 3 */}
@@ -67,7 +69,7 @@ const BuyFromChinaClone = () => {
                  <CreditCard size={12}/> Stripe Protected
                </div>
             </div>
-            <p className="text-gray-600">Checkout with Stripe in Canadian dollars. Bank-grade security.</p>
+            <p className="text-gray-600">Checkout with Stripe in Canadian dollars. Bank-grade security and buyer protection.</p>
           </div>
           
            {/* Step 4 */}
@@ -80,33 +82,38 @@ const BuyFromChinaClone = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-10 px-4 bg-white">
+      <section className="py-12 px-4 bg-white">
         <div className="max-w-md mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Why choose us</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Why choose us</h2>
           
           <div className="space-y-4">
-            <div className="border border-gray-200 rounded-xl p-5">
-               <ShieldCheck className="text-red-600 mb-3" size={32} />
-               <h3 className="font-bold text-lg mb-1">Specialized Taobao expertise</h3>
-               <p className="text-gray-600 text-sm">We navigate language barriers and seller vetting so you don't have to.</p>
+            <div className="border border-gray-200 rounded-2xl p-6 hover:border-red-200 transition-colors">
+               <ShieldCheck className="text-red-600 mb-4" size={32} />
+               <h3 className="font-bold text-xl mb-2">Specialized Taobao expertise</h3>
+               <p className="text-gray-600">We navigate language barriers, payment hurdles, and seller vetting so you don't have to.</p>
             </div>
             
-            <div className="border border-gray-200 rounded-xl p-5">
-               <Globe className="text-red-600 mb-3" size={32} />
-               <h3 className="font-bold text-lg mb-1">Dedicated Canadian support</h3>
-               <p className="text-gray-600 text-sm">Our team is based in Canada and available via email anytime.</p>
+            <div className="border border-gray-200 rounded-2xl p-6 hover:border-red-200 transition-colors">
+               <Globe className="text-red-600 mb-4" size={32} />
+               <h3 className="font-bold text-xl mb-2">Dedicated Canadian support</h3>
+               <p className="text-gray-600">Our team is based in Canada and available via email anytime you have questions.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer / CTA */}
-      <section className="bg-red-600 text-white py-12 px-4 text-center">
+      <section className="bg-gray-900 text-white py-16 px-4 text-center">
         <h2 className="text-2xl font-bold mb-4">Ready to import your next Taobao find?</h2>
-        <p className="mb-8 opacity-90">Get a tailored quote in Canadian dollars.</p>
-        <button className="bg-white text-red-600 font-bold py-3 px-8 rounded-lg shadow-lg w-full max-w-xs">
-          Start Request
-        </button>
+        <p className="mb-8 opacity-80 text-gray-300">Get a tailored quote in Canadian dollars.</p>
+        <Link href="/quote">
+          <button className="bg-red-600 text-white hover:bg-red-700 font-bold py-4 px-8 rounded-xl shadow-lg w-full max-w-xs transition-colors">
+            Start Request
+          </button>
+        </Link>
+        <div className="mt-12 text-xs text-gray-500">
+          © 2025 BuyFromChina.ca. All rights reserved.
+        </div>
       </section>
     </div>
   );
