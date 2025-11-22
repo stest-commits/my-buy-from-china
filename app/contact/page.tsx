@@ -27,10 +27,12 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // 🔧 修复点：手动构建数据，删除了 ...formData 以避免重复字段报错
     const dataToSend = {
       access_key: ACCESS_KEY,
       subject: `新联系留言: ${formData.subject}`,
       from_name: "BuyFromChina Contact",
+      // 这里把所有信息打包进 message，方便你在邮件里看
       message: `
         姓名: ${formData.name}
         邮箱: ${formData.email}
@@ -39,7 +41,10 @@ const ContactPage = () => {
         留言内容:
         ${formData.message}
       `,
-      ...formData
+      // 额外单独传这两个字段，方便 Web3Forms 识别回复人
+      name: formData.name,
+      email: formData.email,
+      // 注意：不要再写 ...formData 了
     };
 
     try {
