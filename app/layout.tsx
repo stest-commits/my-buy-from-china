@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "../components/Navbar"; // 👈 引入我们刚才写的组件
 
-// 这一行会加载 Google 的 Inter 字体
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,8 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* 这一行把字体应用到整个网站 */}
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {/* 👇 把它放在这里，所有页面都会有这个导航栏 */}
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

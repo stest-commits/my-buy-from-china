@@ -106,44 +106,6 @@ const BuyFromChinaClone = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans selection:bg-red-100">
-      
-      {/* Navbar */}
-      <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2 font-bold text-xl text-gray-900 cursor-pointer" onClick={() => window.location.reload()}>
-            <span className="text-red-600"><ShoppingCart /></span>
-            BuyFromChina<span className="text-red-600">.ca</span>
-          </div>
-
-          {/* 语言切换器 */}
-          <div className="relative">
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-sm font-medium text-gray-700 border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-50 transition flex items-center gap-2"
-            >
-              <Globe size={16} />
-              {langNames[currentLang]}
-              <ChevronDown size={14} className={`transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {/* 下拉菜单 */}
-            {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                {(['en', 'fr', 'zh'] as const).map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => switchLang(lang)}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center justify-between ${currentLang === lang ? 'text-red-600 font-bold' : 'text-gray-700'}`}
-                  >
-                    {langNames[lang]}
-                    {currentLang === lang && <Check size={14} />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <header className="bg-white pb-16 pt-12 lg:pt-20 border-b border-gray-100">
