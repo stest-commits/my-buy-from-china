@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react'; // 👈 引入 Suspense
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation'; // 👈 引入读取参数的钩子
-import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard, Check } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { ShoppingCart, ArrowRight, ShieldCheck, Globe, CreditCard } from 'lucide-react';
 
 const translations = {
   en: {
@@ -83,11 +83,11 @@ const translations = {
   }
 };
 
-const BuyFromChinaClone = () => {
+// 🔧 内部组件：包含原本的逻辑
+const HomeContent = () => {
   const [currentLang, setCurrentLang] = useState<'en' | 'fr' | 'zh'>('en');
-  const searchParams = useSearchParams(); // 读取 URL 参数
+  const searchParams = useSearchParams();
 
-  // 监听 URL 变化，自动切换语言
   useEffect(() => {
     const lang = searchParams.get('lang');
     if (lang === 'zh' || lang === 'fr') {
@@ -101,7 +101,6 @@ const BuyFromChinaClone = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans selection:bg-red-100">
-      
       {/* Hero Section */}
       <header className="bg-white pb-16 pt-12 lg:pt-20 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -114,7 +113,6 @@ const BuyFromChinaClone = () => {
           <p className="text-gray-700 mb-10 text-xl leading-relaxed max-w-2xl mx-auto">
             {t.subtitle}
           </p>
-          
           <div className="flex justify-center">
             <Link href="/quote">
               <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-10 rounded-xl text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2 transform hover:-translate-y-1">
@@ -131,23 +129,17 @@ const BuyFromChinaClone = () => {
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{t.how_works}</h2>
           <p className="text-gray-600 text-lg">{t.how_desc}</p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Step 1 */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg mb-6">1</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">{t.step1_title}</h3>
             <p className="text-gray-700 leading-relaxed">{t.step1_desc}</p>
           </div>
-
-          {/* Step 2 */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg mb-6">2</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">{t.step2_title}</h3>
             <p className="text-gray-700 leading-relaxed">{t.step2_desc}</p>
           </div>
-
-          {/* Step 3 */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg mb-6">3</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">{t.step3_title}</h3>
@@ -158,9 +150,7 @@ const BuyFromChinaClone = () => {
             </div>
             <p className="text-gray-700 leading-relaxed">{t.step3_desc}</p>
           </div>
-          
-           {/* Step 4 */}
-           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg mb-6">4</div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">{t.step4_title}</h3>
             <p className="text-gray-700 leading-relaxed">{t.step4_desc}</p>
@@ -172,28 +162,22 @@ const BuyFromChinaClone = () => {
       <section className="py-16 lg:py-24 px-4 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-12 text-center">{t.why_title}</h2>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <div className="border border-gray-200 rounded-3xl p-8 lg:p-10 bg-gray-50 hover:bg-white hover:border-red-200 hover:shadow-lg transition-all">
                <ShieldCheck className="text-red-600 mb-6" size={48} />
                <h3 className="font-bold text-2xl text-gray-900 mb-4">{t.why1_title}</h3>
-               <p className="text-gray-700 text-lg leading-relaxed">
-                 {t.why1_desc}
-               </p>
+               <p className="text-gray-700 text-lg leading-relaxed">{t.why1_desc}</p>
             </div>
-            
             <div className="border border-gray-200 rounded-3xl p-8 lg:p-10 bg-gray-50 hover:bg-white hover:border-red-200 hover:shadow-lg transition-all">
                <Globe className="text-red-600 mb-6" size={48} />
                <h3 className="font-bold text-2xl text-gray-900 mb-4">{t.why2_title}</h3>
-               <p className="text-gray-700 text-lg leading-relaxed">
-                 {t.why2_desc}
-               </p>
+               <p className="text-gray-700 text-lg leading-relaxed">{t.why2_desc}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer / CTA */}
+      {/* CTA Section */}
       <section className="bg-gray-900 text-white py-20 px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">{t.footer_title}</h2>
@@ -203,11 +187,17 @@ const BuyFromChinaClone = () => {
               {t.footer_btn}
             </button>
           </Link>
-          {/* 移除了之前的底部文字，因为现在有全局Footer了 */}
         </div>
       </section>
     </div>
   );
 };
 
-export default BuyFromChinaClone;
+// 🔧 关键修复：用 Suspense 包裹整个内容
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white"></div>}>
+      <HomeContent />
+    </Suspense>
+  );
+}

@@ -1,8 +1,9 @@
+import React, { Suspense } from "react"; // 👈 引入 Suspense
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar"; // 顶部导航
-import Footer from "../components/Footer"; // 👈 新增：引入底部页脚
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen`}>
-        {/* 1. Navbar 在最上面
-           2. children 是中间的内容
-           3. Footer 在最下面
-           min-h-screen + flex-col 确保页脚永远沉在底部，即使内容很少
-        */}
-        <Navbar />
+        {/* 👇 关键修复：用 Suspense 包裹 Navbar */}
+        <Suspense fallback={<div className="h-16 bg-white border-b border-gray-100" />}>
+          <Navbar />
+        </Suspense>
         
         <main className="flex-grow">
           {children}
