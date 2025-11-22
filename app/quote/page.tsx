@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Plus, Upload, Info, CheckCircle, Loader2 } from 'lucide-react';
 
